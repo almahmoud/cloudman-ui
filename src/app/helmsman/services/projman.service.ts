@@ -5,7 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { AppSettings } from '../../app.settings';
-import { Project, ProjectChart } from '../models/project';
+import { Project, ProjectChart, ProjectTemplate } from '../models/project';
 import { QueryResult } from '../models/query';
 
 
@@ -65,6 +65,11 @@ export class ProjManService {
     public rollbackProjectChart(chart: ProjectChart): Observable<ProjectChart> {
         chart.state = "rollback";
         return this.http.put<ProjectChart>(`${this._projects_url}/${chart.project.id}/charts/${chart.id}/`, chart)
+            .pipe(catchError(this.handleError));
+    }
+
+    public installProjectTemplate(template: ProjectTemplate): Observable<ProjectChart> {
+        return this.http.post<ProjectChart>(`${this._projects_url}/${chart.project.id}/templates/`, chart)
             .pipe(catchError(this.handleError));
     }
 

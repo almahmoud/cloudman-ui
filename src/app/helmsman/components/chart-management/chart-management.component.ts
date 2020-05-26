@@ -7,7 +7,7 @@ import { ChartReconfigurationDlgComponent } from '../dialogs/chart-reconfigurati
 import { CreateProjectDlgComponent } from '../dialogs/create-project.component';
 import { ProjManService } from "../../services/projman.service";
 import { Project } from "../../models/project";
-import { ProjectChart } from "../../models/project";
+import { ProjectTemplate } from "../../models/project";
 
 import { Subject } from "rxjs";
 import { startWith, switchMap, tap } from 'rxjs/operators';
@@ -95,23 +95,9 @@ export class ChartManagementComponent implements OnInit {
             if (result === 'save') {
                 let charts = dialogRef.componentInstance.getCharts();
                 if (charts["galaxy"]) {
-                    let newChart = new ProjectChart()
+                    let newTemplate = new ProjectTemplate()
                     newChart.name = 'galaxy';
-                    newChart.repo_name = 'cloudve';
                     newChart.project = this.projectCtrl.value;
-                    newChart.values = {
-                        'ingress': {
-                            'path': `/${this.projectCtrl.value.name}/galaxy`
-                        },
-                        'persistence': {
-                            'storageClass': 'nfs'
-                        },
-                        'postgresql': {
-                            'persistence': {
-                                'storageClass': 'ebs'
-                            }
-                        }
-                    };
                     this._projectService.createProjectChart(newChart)
                         .subscribe(proj => {
                             this.projectsChanged.next(null);

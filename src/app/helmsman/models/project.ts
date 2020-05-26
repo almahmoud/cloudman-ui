@@ -1,4 +1,5 @@
 import { Chart } from './chart';
+import { Template } from './template';
 
 export interface ProjectPermissions {
     add_project: boolean;
@@ -21,4 +22,8 @@ export interface ProjectChartPermissions {
 export class ProjectChart extends Chart {
     project: Project;
     permissions: ProjectChartPermissions;
+}
+
+export class ProjectTemplate extends Template {
+    project: Project;
 }
